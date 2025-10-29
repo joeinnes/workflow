@@ -31,4 +31,9 @@ matrix.app.push({
   project: 'workbench-sveltekit-workflow',
 });
 
+matrix.app.push({
+  name: 'express',
+  project: 'workbench-express-workflow',
+});
+
 console.log(JSON.stringify(matrix));

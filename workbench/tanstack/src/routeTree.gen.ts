@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root';
 import { Route as IndexRouteImport } from './routes/index';
 import { Route as ApiTriggerRouteImport } from './routes/api/trigger';
+import { Route as ApiSignupRouteImport } from './routes/api/signup';
 import { Route as ApiHookRouteImport } from './routes/api/hook';
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const ApiTriggerRoute = ApiTriggerRouteImport.update({
   path: '/api/trigger',
   getParentRoute: () => rootRouteImport,
 } as any);
+const ApiSignupRoute = ApiSignupRouteImport.update({
+  id: '/api/signup',
+  path: '/api/signup',
+  getParentRoute: () => rootRouteImport,
+} as any);
 const ApiHookRoute = ApiHookRouteImport.update({
   id: '/api/hook',
   path: '/api/hook',
@@ -32,30 +38,34 @@ const ApiHookRoute = ApiHookRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute;
   '/api/hook': typeof ApiHookRoute;
+  '/api/signup': typeof ApiSignupRoute;
   '/api/trigger': typeof ApiTriggerRoute;
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute;
   '/api/hook': typeof ApiHookRoute;
+  '/api/signup': typeof ApiSignupRoute;
   '/api/trigger': typeof ApiTriggerRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
   '/': typeof IndexRoute;
   '/api/hook': typeof ApiHookRoute;
+  '/api/signup': typeof ApiSignupRoute;
   '/api/trigger': typeof ApiTriggerRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/' | '/api/hook' | '/api/trigger';
+  fullPaths: '/' | '/api/hook' | '/api/signup' | '/api/trigger';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/' | '/api/hook' | '/api/trigger';
-  id: '__root__' | '/' | '/api/hook' | '/api/trigger';
+  to: '/' | '/api/hook' | '/api/signup' | '/api/trigger';
+  id: '__root__' | '/' | '/api/hook' | '/api/signup' | '/api/trigger';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   ApiHookRoute: typeof ApiHookRoute;
+  ApiSignupRoute: typeof ApiSignupRoute;
   ApiTriggerRoute: typeof ApiTriggerRoute;
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiTriggerRouteImport;
       parentRoute: typeof rootRouteImport;
     };
+    '/api/signup': {
+      id: '/api/signup';
+      path: '/api/signup';
+      fullPath: '/api/signup';
+      preLoaderRoute: typeof ApiSignupRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     '/api/hook': {
       id: '/api/hook';
       path: '/api/hook';
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiHookRoute: ApiHookRoute,
+  ApiSignupRoute: ApiSignupRoute,
   ApiTriggerRoute: ApiTriggerRoute,
 };
 export const routeTree = rootRouteImport

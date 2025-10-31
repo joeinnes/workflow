@@ -30,7 +30,8 @@
     "@workflow/example-vite": "0.0.0",
     "@workflow/example-sveltekit": "0.0.0",
     "@workflow/builders": "4.0.1-beta.3",
-    "@workflow/sveltekit": "4.0.0-beta.1"
+    "@workflow/sveltekit": "4.0.0-beta.1",
+    "@workflow/example-tanstack": "0.0.0"
   },
   "changesets": [
     "add-documentation",

@@ -67,6 +67,13 @@ export class LocalBuilder extends BaseBuilder {
       outfile: join(this.#outDir, 'webhook.mjs'),
       bundle: false,
     });
+    let webhookRouteContent = await readFile(
+      join(this.#outDir, 'webhook.mjs'),
+      'utf-8'
+    );
+    webhookRouteContent = `process.on('unhandledRejection', (reason) => { if (reason !== undefined) console.error('Unhandled rejection detected', reason); });
+${webhookRouteContent}`;
+    await writeFile(join(this.#outDir, 'webhook.mjs'), webhookRouteContent);
   }
 }
 

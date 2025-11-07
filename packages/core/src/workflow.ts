@@ -542,8 +542,9 @@ export async function runWorkflow(
       SYMBOL_FOR_REQ_CONTEXT
     ];
 
-    // Get a reference to the user-defined workflow function
-    // Provide a meaningful filename for better stack traces
+    // Get a reference to the user-defined workflow function.
+    // The filename parameter ensures stack traces show a meaningful name
+    // (e.g., "workflow-myWorkflow.js") instead of "evalmachine.<anonymous>".
     const workflowFn = runInContext(
       `${workflowCode}; globalThis.__private_workflows?.get(${JSON.stringify(workflowRun.workflowName)})`,
       context,

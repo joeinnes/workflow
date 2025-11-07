@@ -694,6 +694,39 @@ describe('runWorkflow', () => {
       expect(error.message).toEqual('test');
     });
 
+    it('should include workflow name in stack trace instead of evalmachine', async () => {
+      let error: Error | undefined;
+      try {
+        const ops: Promise<any>[] = [];
+        const workflowRun: WorkflowRun = {
+          runId: 'test-run-123',
+          workflowName: 'testWorkflow',
+          status: 'running',
+          input: dehydrateWorkflowArguments([], ops),
+          createdAt: new Date('2024-01-01T00:00:00.000Z'),
+          updatedAt: new Date('2024-01-01T00:00:00.000Z'),
+          startedAt: new Date('2024-01-01T00:00:00.000Z'),
+          deploymentId: 'test-deployment',
+        };
+
+        const events: Event[] = [];
+
+        await runWorkflow(
+          `function testWorkflow() { throw new Error("test error"); }${getWorkflowTransformCode('testWorkflow')}`,
+          workflowRun,
+          events
+        );
+      } catch (err) {
+        error = err as Error;
+      }
+      assert(error);
+      expect(error.stack).toBeDefined();
+      // Stack trace should include the workflow name in the filename
+      expect(error.stack).toContain('workflow-testWorkflow.js');
+      // Stack trace should NOT contain 'evalmachine' which was the old behavior
+      expect(error.stack).not.toContain('evalmachine');
+    });
+
     it('should throw `WorkflowSuspension` when a step does not have an event result entry', async () => {
       let error: Error | undefined;
       try {

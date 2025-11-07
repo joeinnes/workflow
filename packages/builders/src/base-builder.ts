@@ -475,8 +475,8 @@ export abstract class BaseBuilder {
       treeShaking: true,
       keepNames: true,
       minify: false,
-      // TODO: investigate proper source map support
-      sourcemap: EMIT_SOURCEMAPS_FOR_DEBUGGING,
+      // Inline source maps for better stack traces in workflow VM execution
+      sourcemap: 'inline',
       resolveExtensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'],
       plugins: [
         createSwcPlugin({

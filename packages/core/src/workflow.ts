@@ -543,9 +543,11 @@ export async function runWorkflow(
     ];
 
     // Get a reference to the user-defined workflow function
+    // Provide a meaningful filename for better stack traces
     const workflowFn = runInContext(
       `${workflowCode}; globalThis.__private_workflows?.get(${JSON.stringify(workflowRun.workflowName)})`,
-      context
+      context,
+      { filename: `workflow-${workflowRun.workflowName}.js` }
     );
 
     if (typeof workflowFn !== 'function') {

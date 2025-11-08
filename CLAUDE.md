@@ -159,3 +159,4 @@ This project uses pnpm with workspace configuration. The required version is spe
 - Create a changeset using `pnpm changeset add`
   - All changed packages should be included in the changeset. Never include unchanged packages.
   - All changes should be marked as "patch". Never use "major" or "minor" modes.
+- Remember to always build any packages that get changed before running downstream tests like e2e tests in the workbench

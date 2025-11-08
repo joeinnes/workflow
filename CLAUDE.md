@@ -160,3 +160,4 @@ This project uses pnpm with workspace configuration. The required version is spe
   - All changed packages should be included in the changeset. Never include unchanged packages.
   - All changes should be marked as "patch". Never use "major" or "minor" modes.
 - Remember to always build any packages that get changed before running downstream tests like e2e tests in the workbench
+- Remember that changes made to one workbench should propogate to all other workbenches. The workflows should typically only be written once inside the example workbench and symlinked into all the other workbenches

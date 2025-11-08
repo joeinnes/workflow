@@ -579,8 +579,8 @@ export const POST = workflowEntrypoint(workflowCode);`;
           loader: 'js',
         },
         outfile,
-        // Source maps for the final workflow bundle wrapper (not critical since this code
-        // doesn't run in the VM - the intermediate bundle at line 479 runs in the VM)
+        // Source maps for the final workflow bundle wrapper (not impport since this code
+        // doesn't run in the VM - only the intermediate bundle sourcemap is relevant)
         sourcemap: EMIT_SOURCEMAPS_FOR_DEBUGGING,
         absWorkingDir: this.config.workingDir,
         bundle: true,

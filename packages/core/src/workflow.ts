@@ -30,6 +30,8 @@ import { createCreateHook } from './workflow/hook.js';
 import { createSleep } from './workflow/sleep.js';
 import { parseWorkflowName } from './parse-name.js';
 
+export { remapErrorStack } from './source-map.js';
+
 export async function runWorkflow(
   workflowCode: string,
   workflowRun: WorkflowRun,

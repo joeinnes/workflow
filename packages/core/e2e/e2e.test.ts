@@ -524,4 +524,40 @@ describe('e2e', () => {
     expect(returnValue.retryableResult.duration).toBeGreaterThan(10_000);
     expect(returnValue.gotFatalError).toBe(true);
   });
+
+  test(
+    'crossFileErrorWorkflow - stack traces work across imported modules',
+    { timeout: 60_000 },
+    async () => {
+      // This workflow intentionally throws an error from an imported helper module
+      // to verify that stack traces correctly show cross-file call chains
+      const run = await triggerWorkflow('crossFileErrorWorkflow', []);
+      const returnValue = await getWorkflowReturnValue(run.runId);
+
+      // The workflow should fail with the error from the helper module
+      expect(returnValue).toHaveProperty('error');
+      expect(returnValue.error).toContain('Error from imported helper module');
+
+      // Verify the stack trace is present and shows correct file paths
+      expect(returnValue).toHaveProperty('stack');
+      expect(typeof returnValue.stack).toBe('string');
+
+      // Stack trace should include frames from the helper module (helpers.ts)
+      expect(returnValue.stack).toContain('helpers.ts');
+      expect(returnValue.stack).toContain('throwError');
+      expect(returnValue.stack).toContain('callThrower');
+
+      // Stack trace should include frames from the workflow file (99_e2e.ts)
+      expect(returnValue.stack).toContain('99_e2e.ts');
+      expect(returnValue.stack).toContain('crossFileErrorWorkflow');
+
+      // Stack trace should NOT contain 'evalmachine' anywhere
+      expect(returnValue.stack).not.toContain('evalmachine');
+
+      // Verify the run failed
+      const { json: runData } = await cliInspectJson(`runs ${run.runId}`);
+      expect(runData.status).toBe('failed');
+      expect(runData.error).toContain('Error from imported helper module');
+    }
+  );
 });

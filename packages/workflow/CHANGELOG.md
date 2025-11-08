@@ -1,5 +1,15 @@
 # workflow
 
+## 4.0.1-beta.13
+
+### Patch Changes
+
+- @workflow/cli@4.0.1-beta.13
+- @workflow/next@4.0.1-beta.13
+- @workflow/nitro@4.0.1-beta.13
+- @workflow/sveltekit@4.0.0-beta.7
+- @workflow/nuxt@4.0.1-beta.2
+
 ## 4.0.1-beta.12
 
 ### Patch Changes
